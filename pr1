@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CS250 One-Page Practice Test – Topics Review</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    .question h3 {
+      margin-top: 0;
+    }
+    .choice {
+      margin: 5px 0;
+    }
+    .check-button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    input[type="text"], textarea {
+      width: 95%;
+      padding: 8px;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>CS250 One-Page Practice Test – Topics Review</h1>
+  <div id="test-container"></div>
+
+  <script>
+    // Array of 30 questions covering:
+    // Binary Arithmetic, ASCII, Memory/Latches/Bandwidth,
+    // How Circuits Work, Power (units/formulas), Computer Parts,
+    // Gates/Logic, and Clocks.
+    var questions = [
+      // Binary Arithmetic
+      { 
+        type: "mcq", 
+        question: "1. Convert the binary number 100110 to decimal.", 
+        choices: ["38", "36", "40", "42"],
+        answer: "38"
+      },
+      { 
+        type: "mcq", 
+        question: "2. What is the result of binary subtraction: 1010 - 0101?", 
+        choices: ["0101", "0011", "0111", "1001"],
+        answer: "0101"
+      },
+      // ASCII
+      { 
+        type: "short", 
+        question: "3. What does the ASCII code 65 represent?", 
+        answer: "A"
+      },
+      { 
+        type: "mcq", 
+        question: "4. Which of the following is not part of the standard ASCII set?", 
+        choices: ["Control characters", "Uppercase letters", "Extended symbols", "Digits"],
+        answer: "Extended symbols"
+      },
+      // Memory, Latches, and Bandwidth
+      { 
+        type: "short", 
+        question: "5. What type of memory loses its data when power is removed?", 
+        answer: "Volatile memory"
+      },
+      { 
+        type: "mcq", 
+        question: "6. What is the primary function of a latch in digital electronics?", 
+        choices: ["Amplifies signals", "Stores one bit of data", "Performs arithmetic", "Controls voltage"],
+        answer: "Stores one bit of data"
+      },
+      { 
+        type: "short", 
+        question: "7. In one sentence, what does 'bandwidth' in memory refer to?", 
+        answer: "The rate at which data is transferred between memory and the processor."
+      },
+      // How Circuits Work
+      { 
+        type: "short", 
+        question: "8. In a series circuit with an LED and resistor, what is the resistor’s role?", 
+        answer: "To limit the current through the LED."
+      },
+      { 
+        type: "mcq", 
+        question: "9. Which component in a circuit stores electrical energy in an electric field?", 
+        choices: ["Resistor", "Capacitor", "Inductor", "Diode"],
+        answer: "Capacitor"
+      },
+      // Power (Units & Formulas)
+      { 
+        type: "mcq", 
+        question: "10. Using Ohm's Law, if V = 9V and I = 3A, what is the resistance (R)?", 
+        choices: ["3 Ohms", "27 Ohms", "6 Ohms", "12 Ohms"],
+        answer: "3 Ohms"
+      },
+      { 
+        type: "short", 
+        question: "11. Write the formula for electrical power.", 
+        answer: "P = IV"
+      },
+      { 
+        type: "mcq", 
+        question: "12. If a device operates at 5V drawing 0.5A, what is its power consumption?", 
+        choices: ["2.5W", "0.5W", "5W", "10W"],
+        answer: "2.5W"
+      },
+      // Parts of a Computer
+      { 
+        type: "mcq", 
+        question: "13. Which component is known as the 'brain' of the computer?", 
+        choices: ["RAM", "CPU", "GPU", "Motherboard"],
+        answer: "CPU"
+      },
+      { 
+        type: "short", 
+        question: "14. Name one common peripheral device connected to a computer.", 
+        answer: "Keyboard"
+      },
+      { 
+        type: "mcq", 
+        question: "15. Which component is primarily responsible for temporary data storage during processing?", 
+        choices: ["CPU", "RAM", "Power Supply", "Hard Drive"],
+        answer: "RAM"
+      },
+      // Gates and Logic
+      { 
+        type: "mcq", 
+        question: "16. Which gate outputs 1 only when all its inputs are 1?", 
+        choices: ["AND", "OR", "NAND", "XOR"],
+        answer: "AND"
+      },
+      { 
+        type: "short", 
+        question: "17. Provide the Boolean expression for a NAND gate.", 
+        answer: "NOT (A AND B)"
+      },
+      { 
+        type: "mcq", 
+        question: "18. Which logic gate outputs 1 when the inputs are different?", 
+        choices: ["AND", "OR", "XOR", "NOR"],
+        answer: "XOR"
+      },
+      { 
+        type: "short", 
+        question: "19. State De Morgan’s theorem for ¬(A ∧ B).", 
+        answer: "¬A OR ¬B"
+      },
+      { 
+        type: "mcq", 
+        question: "20. A circuit built solely with NAND gates is considered:", 
+        choices: ["Universal", "Partial", "Exclusive", "Limited"],
+        answer: "Universal"
+      },
+      // Clocks and Memory (in principle)
+      { 
+        type: "short", 
+        question: "21. In one sentence, what is the primary function of a clock signal in digital circuits?", 
+        answer: "It synchronizes the operations of the circuit components."
+      },
+      { 
+        type: "mcq", 
+        question: "22. What unit is used to measure clock frequency?", 
+        choices: ["Seconds", "Hertz", "Ohms", "Watts"],
+        answer: "Hertz"
+      },
+      { 
+        type: "short", 
+        question: "23. What does 'propagation delay' refer to in a digital circuit?", 
+        answer: "The time it takes for a signal to travel through a gate or circuit."
+      },
+      { 
+        type: "mcq", 
+        question: "24. In a synchronous system, data is typically stored on which edge of the clock signal?", 
+        choices: ["Rising edge", "Falling edge", "Both rising and falling", "Neither"],
+        answer: "Both rising and falling"
+      },
+      // Additional Questions
+      { 
+        type: "short", 
+        question: "25. Convert the binary number 1111 to hexadecimal.", 
+        answer: "F"
+      },
+      { 
+        type: "mcq", 
+        question: "26. Which statement best describes ASCII?", 
+        choices: ["A numerical code for characters", "A type of memory", "A logic gate", "A clock signal"],
+        answer: "A numerical code for characters"
+      },
+      { 
+        type: "short", 
+        question: "27. What is the primary function of a resistor in an electronic circuit?", 
+        answer: "To limit current flow."
+      },
+      { 
+        type: "mcq", 
+        question: "28. Which unit is used to measure electrical resistance?", 
+        choices: ["Ohm", "Watt", "Ampere", "Volt"],
+        answer: "Ohm"
+      },
+      { 
+        type: "short", 
+        question: "29. Briefly define what a logic gate is.", 
+        answer: "A basic building block that performs a logical operation on binary inputs."
+      },
+      { 
+        type: "mcq", 
+        question: "30. Which formula correctly relates voltage (V), current (I), and resistance (R)?", 
+        choices: ["V = IR", "V = I/R", "V = I + R", "V = I - R"],
+        answer: "V = IR"
+      }
+    ];
+
+    // Function to generate the test: create HTML for each question and insert into the container.
+    function generateTest() {
+      var container = document.getElementById("test-container");
+      questions.forEach(function(q, index) {
+        var qDiv = document.createElement("div");
+        qDiv.className = "question";
+        qDiv.id = "question_" + index;
+
+        // Add question text.
+        var qText = document.createElement("h3");
+        qText.textContent = q.question;
+        qDiv.appendChild(qText);
+
+        // Create input based on question type.
+        if(q.type === "mcq") {
+          // Create radio buttons for each choice.
+          q.choices.forEach(function(choice) {
+            var label = document.createElement("label");
+            label.className = "choice";
+            var radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "q_" + index;
+            radio.value = choice;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(" " + choice));
+            qDiv.appendChild(label);
+            qDiv.appendChild(document.createElement("br"));
+          });
+        } else if(q.type === "short") {
+          // Create text input.
+          var input = document.createElement("input");
+          input.type = "text";
+          input.id = "input_" + index;
+          qDiv.appendChild(input);
+        }
+
+        // Add "Check Answer" button.
+        var btn = document.createElement("button");
+        btn.className = "check-button";
+        btn.textContent = "Check Answer";
+        btn.onclick = function() { checkAnswer(index); };
+        qDiv.appendChild(btn);
+
+        // Add feedback display area.
+        var fbDiv = document.createElement("div");
+        fbDiv.className = "feedback";
+        fbDiv.id = "feedback_" + index;
+        qDiv.appendChild(fbDiv);
+
+        container.appendChild(qDiv);
+      });
+    }
+
+    // Function to check the answer for a given question index.
+    function checkAnswer(index) {
+      var q = questions[index];
+      var userAnswer = "";
+      if(q.type === "mcq") {
+        var radios = document.getElementsByName("q_" + index);
+        for (var i = 0; i < radios.length; i++) {
+          if(radios[i].checked){
+            userAnswer = radios[i].value;
+            break;
+          }
+        }
+      } else {
+        userAnswer = document.getElementById("input_" + index).value;
+      }
+      // Compare answer (case-insensitive and trimmed).
+      var isCorrect = (userAnswer.trim().toLowerCase() === q.answer.trim().toLowerCase());
+      var feedbackElem = document.getElementById("feedback_" + index);
+      if(isCorrect) {
+        feedbackElem.innerHTML = "<span style='color: green;'>Correct!</span>";
+      } else {
+        feedbackElem.innerHTML = "<span style='color: red;'>Incorrect. The correct answer is: " + q.answer + "</span>";
+      }
+    }
+
+    window.onload = generateTest;
+  </script>
+</body>
+</html>
